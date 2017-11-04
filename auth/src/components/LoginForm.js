@@ -19,12 +19,16 @@ export default class LoginForm extends React.Component {
     this.setState({ error: '', loading: true })
 
     firebase.auth().signInWithEmailAndPassword(email, pass)
+      .then(this.onLoginSuccess.bind(this))
       .catch(() => {
         firebase.auth().createUserWithEmailAndPassword(email, pass)
-          .catch(() => {
-            this.setState({ error: 'Authentication Failed.', loading: false })
-          });
+          .then(this.onLoginSuccess.bind(this))
+          .catch(this.onLoginFail.bind(this));
       });
+  }
+
+  onLoginFail() {
+    this.setState({ error: 'Authentication Failed.', loading: false })
   }
 
   onLoginSuccess() {
@@ -48,7 +52,7 @@ export default class LoginForm extends React.Component {
       <Container>
         <ContainerSection>
           <InputText
-            value={this.state.login}
+            value={this.state.email}
             onChangeText={text => this.setState({ email: text })}
             placeholder='example@gmail.com'
             label="Email"
