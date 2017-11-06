@@ -3,13 +3,13 @@ import { View } from 'react-native';
 
 import LoginForm from './src/components/LoginForm'
 import LogoutForm from './src/components/LogoutForm'
-import { Header } from './src/components/common'
+import { Header, Spinner } from './src/components/common'
 
 import firebase from 'firebase'
 
 export default class App extends React.Component {
 
-  state = { user: null }
+  state = { loggedIn: null }
 
   componentWillMount() {
     firebase.initializeApp({
@@ -21,14 +21,27 @@ export default class App extends React.Component {
       messagingSenderId: "544808949659"
     });
 
-    firebase.auth().onAuthStateChanged(user => this.setState({ user }));
+    firebase.auth().onAuthStateChanged(user => this.authStateChanged(user));
+  }
+
+  authStateChanged(user) {
+    if (user) {
+      this.setState({ loggedIn: true });
+    } else {
+      this.setState({ loggedIn: false });
+    }
   }
 
   renderMain() {
-    console.log(this.state.user)
-    if (this.state.user) {
+    if (this.state.loggedIn == true) {
       return (
-        <LogoutForm onButtonPress={() => this.setState({ user: null })}/>
+        <LogoutForm onButtonPress={() => firebase.auth().signOut()}/>
+      );
+    } else if (this.state.loggedIn == null) {
+      return (
+        <View style={{ marginTop: 20 }}>
+          <Spinner size='large' />
+        </View>
       );
     }
 
