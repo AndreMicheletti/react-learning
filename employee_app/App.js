@@ -1,23 +1,43 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Header } from './src/components/common';
+import LoginForm from './src/components/LoginForm';
+
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import firebase from 'firebase';
+import reducers from './src/reducers';
 
 export default class App extends React.Component {
+
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyAYCz9Zebe5sPf3axQcuE1VYMXFysZvOE4",
+      authDomain: "auth-app-a8eb8.firebaseapp.com",
+      databaseURL: "https://auth-app-a8eb8.firebaseio.com",
+      projectId: "auth-app-a8eb8",
+      storageBucket: "auth-app-a8eb8.appspot.com",
+      messagingSenderId: "544808949659"
+    });
+  }
+
   render() {
+    const { containerStyle } = styles;
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={createStore(reducers)}>
+        <View style={containerStyle}>
+          <Header text="Entrar no App" />
+          <LoginForm />
+        </View>
+      </Provider>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerStyle: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  }
 });
