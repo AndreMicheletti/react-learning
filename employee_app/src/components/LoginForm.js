@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Container,
   ContainerSection,
@@ -6,14 +7,19 @@ import {
   InputText
 } from './common';
 
-export default class LoginForm extends React.Component {
+import { formChanged } from '../actions';
+
+class LoginForm extends React.Component {
   render() {
+    const { email, password, formChanged } = this.props;
     return (
       <Container>
         <ContainerSection>
           <InputText
             label="Email"
             placeholder="exemplo@gmail.com"
+            onChangeText={(value) => formChanged({ prop: 'email', value })}
+            value={email}
           />
         </ContainerSection>
 
@@ -21,6 +27,8 @@ export default class LoginForm extends React.Component {
           <InputText
             label="Senha"
             placeholder="passwd"
+            onChangeText={(value) => formChanged({ prop: 'passwd', value })}
+            value={password}
             secureTextEntry
           />
         </ContainerSection>
@@ -32,3 +40,9 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { ...state.auth };
+}
+
+export default connect(mapStateToProps, { formChanged })(LoginForm);
