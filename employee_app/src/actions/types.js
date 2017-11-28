@@ -1,1 +1,4 @@
-export const FORM_CHANGED = 'form_changed';
+export const AUTH_FORM_CHANGED = 'form_changed';
+export const AUTH_LOGIN_REQUEST = 'AUTH_LOGIN_REQUEST';
+export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
+export const AUTH_LOGIN_FAILED = 'AUTH_LOGIN_FAILED';

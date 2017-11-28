@@ -21,7 +21,9 @@
   "dependencies": {
     "expo": "^22.0.2",
     "firebase": "^4.6.2",
+    "global": "^4.3.2",
     "react": "16.0.0-beta.5",
+    "react-devtools": "^3.0.0",
     "react-native": "^0.49.5",
     "react-redux": "^5.0.6",
     "redux-thunk": "^2.2.0"

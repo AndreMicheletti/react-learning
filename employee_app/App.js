@@ -4,7 +4,8 @@ import { Header } from './src/components/common';
 import LoginForm from './src/components/LoginForm';
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 
 import firebase from 'firebase';
 import reducers from './src/reducers';
@@ -25,7 +26,7 @@ export default class App extends React.Component {
   render() {
     const { containerStyle } = styles;
     return (
-      <Provider store={createStore(reducers)}>
+      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
         <View style={containerStyle}>
           <Header text="Entrar no App" />
           <LoginForm />
